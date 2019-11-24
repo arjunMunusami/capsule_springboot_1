@@ -20,16 +20,17 @@ public class TaskEntity implements Serializable {
 	private static final long serialVersionUID = 1094820529356437361L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name="TASK_ID")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer taskId;
 	
-	@Column(name="TASK")
+	@Column(name="TASK_NAME")
 	private String taskName;
 	
 	@Column(name="PRIORITY")
 	private Integer taskPriority;
 	
-	@Column(name="START_END")
+	@Column(name="START_DATE")
 	private Date taskStartDt;
 	
 	@Column(name="END_DATE")

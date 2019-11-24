@@ -1,15 +1,15 @@
 package com.fsd.assignment.taskmanager.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import com.fsd.assignment.taskmanager.entity.TaskEntity;
 
-@Repository
+@EnableJpaRepositories
 public interface TaskManagerDAO extends JpaRepository<TaskEntity, Integer> , CustomTaskManagerDAO {
 	
 	
-	public TaskEntity fetchByTaskName(String taskName);
+	public TaskEntity findByTaskName(String taskName);
 	
 	
 	

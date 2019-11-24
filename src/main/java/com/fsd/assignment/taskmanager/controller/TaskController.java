@@ -4,13 +4,15 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fsd.assignment.taskmanager.entity.TaskEntity;
 import com.fsd.assignment.taskmanager.exception.BusinessException;
+import com.fsd.assignment.taskmanager.model.TaskResultVO;
 import com.fsd.assignment.taskmanager.model.TaskSearchVO;
 import com.fsd.assignment.taskmanager.service.TaskManagerServiceImpl;
 
@@ -22,7 +24,7 @@ public class TaskController {
 	private TaskManagerServiceImpl service;
 	
 	@RequestMapping(value = {"/addTask","/updateTask"}, method = {RequestMethod.POST})
-	public String addTask(Model model,@ModelAttribute TaskEntity taskData) {
+	public String addTask(Model model,@RequestBody TaskEntity taskData) {
 		String msg = null;
 		try {
 			taskData = service.saveTaskDetails(taskData);
@@ -33,15 +35,28 @@ public class TaskController {
 	}
 	
 	@RequestMapping(value = "/searchTask", method = {RequestMethod.POST})
-	public TaskSearchVO searchTask(Model model,@ModelAttribute TaskSearchVO taskSearch) {
-		List<TaskEntity> taskDetails;
+	public TaskResultVO searchTask(Model model,@RequestBody TaskSearchVO taskSearch) {
+		TaskResultVO resultVO = new TaskResultVO();
+		
 		try {
-			taskDetails = service.fetchTaskDetails(taskSearch);
-			taskSearch.setTaskEntityList(taskDetails);
+			List<TaskEntity> taskDetails = service.fetchTaskDetails(taskSearch);
+			resultVO.setTaskList(taskDetails);
 		} catch (RuntimeException e) {
-			taskSearch.setErrorMsg(e.getMessage());
+			resultVO.setErrMsg(e.getMessage());
 		}
-		return taskSearch;
+		return resultVO;
+	}
+	
+	@RequestMapping(value = "/loadTask", method = {RequestMethod.GET})
+	public TaskResultVO loadTask(Model model,@RequestParam("taskId") Integer taskId) {
+		TaskResultVO resultVO = new TaskResultVO();
+		try {
+			TaskEntity taskDetail = service.fetchTaskEntity(taskId);
+			resultVO.setTaskEntity(taskDetail);
+		} catch (RuntimeException e) {
+			resultVO.setErrMsg(e.getMessage());
+		}
+		return resultVO;
 	}
 	
 }

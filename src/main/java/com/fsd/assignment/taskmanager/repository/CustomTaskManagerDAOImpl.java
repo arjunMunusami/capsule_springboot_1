@@ -31,8 +31,6 @@ public class CustomTaskManagerDAOImpl implements CustomTaskManagerDAO {
 		CriteriaQuery cq = cb.createQuery(TaskEntity.class);
 		
 		Root<TaskEntity> root = cq.from(TaskEntity.class);
-		Join<TaskEntity, TaskEntity> prtskJoin = root.join("parentTask", JoinType.INNER);
-
 		
 		List<Predicate> predicates = new ArrayList<>();
 		if (StringUtils.isNotBlank(taskVo.getTaskName())) {
@@ -44,7 +42,7 @@ public class CustomTaskManagerDAOImpl implements CustomTaskManagerDAO {
 	    }
 		
 		if(null!=taskVo.getTaskMaxPriority()) {
-	        predicates.add(cb.ge(root.get("taskPriority"), taskVo.getTaskMaxPriority()));
+	        predicates.add(cb.le(root.get("taskPriority"), taskVo.getTaskMaxPriority()));
 	    }
 		
 		if(null!=taskVo.getTaskStartDate()) {
@@ -56,6 +54,7 @@ public class CustomTaskManagerDAOImpl implements CustomTaskManagerDAO {
 	    }
 		
 		if(StringUtils.isNotBlank(taskVo.getParentTask())) {
+			Join<TaskEntity, TaskEntity> prtskJoin = root.join("parentTask", JoinType.LEFT);
 	        predicates.add(cb.like(prtskJoin.get("taskName"), "%"+taskVo.getParentTask()+"%"));
 	    }
 	   

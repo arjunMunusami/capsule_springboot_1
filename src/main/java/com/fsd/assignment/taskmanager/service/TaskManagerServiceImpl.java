@@ -19,7 +19,7 @@ public class TaskManagerServiceImpl {
 	public TaskEntity saveTaskDetails(TaskEntity taskEntity) throws BusinessException {
 		
 		if(null!=taskEntity.getParentTask()) {
-			TaskEntity parentTask = daoRepo.fetchByTaskName(taskEntity.getParentTask().getTaskName());
+			TaskEntity parentTask = daoRepo.findByTaskName(taskEntity.getParentTask().getTaskName());
 			if(null==parentTask) {
 				throw new BusinessException("Parent Task is not defined in System!");
 			} else {
@@ -34,6 +34,10 @@ public class TaskManagerServiceImpl {
 	public List<TaskEntity> fetchTaskDetails(TaskSearchVO searchTaskVO) {
 		
 		return daoRepo.fetchTaskDetails(searchTaskVO);
+	}
+	
+	public TaskEntity fetchTaskEntity(Integer taskId) {
+		return daoRepo.findById(taskId).get();
 	}
 	
 }

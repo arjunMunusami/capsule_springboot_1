@@ -1,12 +1,15 @@
 package com.fsd.assignment.taskmanager.model;
 
+import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
-import com.fsd.assignment.taskmanager.entity.TaskEntity;
-
-public class TaskSearchVO {
+public class TaskSearchVO implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4301533199376481884L;
+
 	private String taskName;
 	
 	private Integer taskMinPriority;
@@ -19,10 +22,6 @@ public class TaskSearchVO {
 	
 	private Date taskEndDate;
 	
-	private String errorMsg;
-	
-	private List<TaskEntity> taskEntityList;
-
 	public String getTaskName() {
 		return taskName;
 	}
@@ -69,22 +68,6 @@ public class TaskSearchVO {
 
 	public void setTaskEndDate(Date taskEndDate) {
 		this.taskEndDate = taskEndDate;
-	}
-
-	public String getErrorMsg() {
-		return errorMsg;
-	}
-
-	public void setErrorMsg(String errorMsg) {
-		this.errorMsg = errorMsg;
-	}
-
-	public List<TaskEntity> getTaskEntityList() {
-		return taskEntityList;
-	}
-
-	public void setTaskEntityList(List<TaskEntity> taskEntityList) {
-		this.taskEntityList = taskEntityList;
 	}
 
 }
