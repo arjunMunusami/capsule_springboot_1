@@ -40,4 +40,8 @@ public class TaskManagerServiceImpl {
 		return daoRepo.findById(taskId).get();
 	}
 	
+	public void endTask(Integer taskId) {
+		daoRepo.endTaskDetail("CMP", taskId);
+	}
+	
 }

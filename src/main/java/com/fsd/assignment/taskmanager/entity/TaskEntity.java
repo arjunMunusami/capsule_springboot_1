@@ -39,6 +39,9 @@ public class TaskEntity implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="PARENT_ID", referencedColumnName="TASK_ID")
 	private TaskEntity parentTask;
+	
+	@Column(name="STATUS")
+	private String status;
 
 	public Integer getTaskId() {
 		return taskId;
@@ -86,6 +89,14 @@ public class TaskEntity implements Serializable {
 
 	public void setParentTask(TaskEntity parentTask) {
 		this.parentTask = parentTask;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 }
